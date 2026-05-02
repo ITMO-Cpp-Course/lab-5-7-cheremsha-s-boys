@@ -29,6 +29,7 @@ TEST_CASE("InvertedIndex: Core functionality", "[index]") {
         REQUIRE_THAT(results, Catch::Matchers::UnorderedEquals(std::vector<size_t>{10, 11}));
     }
 
+
     SECTION("Word counting") {
         index.addDocument(DocumentBuilder::build(1, "D1", "test test again"));
         REQUIRE(index.getWordCount("test", 1) == 2);

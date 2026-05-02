@@ -5,7 +5,6 @@ namespace lab5::memory
 {
 struct Document
 {
-
     size_t id;
     std::string name;
     std::string content;

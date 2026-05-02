@@ -1,13 +1,14 @@
-#include "document_builder.hpp"
+#include "DocumentBuilder.hpp"
 #include <algorithm>
 #include <cctype>
-
+namespace lab5::memory
+{
 Document DocumentBuilder::build(size_t id, std::string name, std::string text)
 {
 
     std::vector<std::string> words = splitAndNormalize(text);
 
-    return Document(id, std::move(name), std::move(text), std::move(words));
+    return Document(id, std::move(name), std::move(text));
 }
 
 std::vector<std::string> DocumentBuilder::splitAndNormalize(const std::string& text)
@@ -34,4 +35,5 @@ std::vector<std::string> DocumentBuilder::splitAndNormalize(const std::string& t
     }
 
     return result;
+}
 }

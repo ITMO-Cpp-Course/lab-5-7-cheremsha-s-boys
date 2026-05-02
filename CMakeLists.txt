@@ -35,13 +35,13 @@ enable_testing()
 # Sanitizers are not supported on Windows (neither MSVC nor MinGW)
 if (ENABLE_SANITIZERS AND NOT WIN32)
     add_library(project_sanitizers INTERFACE
-            src/document_builder.hpp
-            src/document_builder.hpp
-            src/document_builder.cpp
-            src/document_builder.cpp
-            src/document_builder.hpp
-            src/document_builder.hpp
-            src/document_builder.cpp)
+            src/DocumentBuilder.hpp
+            src/DocumentBuilder.hpp
+            src/DocumentBuilder.cpp
+            src/DocumentBuilder.cpp
+            src/DocumentBuilder.hpp
+            src/DocumentBuilder.hpp
+            src/DocumentBuilder.cpp)
     target_compile_options(project_sanitizers INTERFACE $<$<CONFIG:Debug>:-fsanitize=address -fno-omit-frame-pointer>)
     target_link_options(project_sanitizers INTERFACE $<$<CONFIG:Debug>:-fsanitize=address>)
 endif ()

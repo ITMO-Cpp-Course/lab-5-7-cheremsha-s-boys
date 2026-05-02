@@ -1,11 +1,12 @@
 #include "InvertedIndex.hpp"
+#include "DocumentBuilder.hpp"
 #include <utility>
 namespace lab5::memory
 {
 void InvertedIndex::AddDocument(Document&& doc)
 {
     size_t id = doc.id;
-    auto document_text = DocumentBuilder::splitAndNormilize(doc.content);
+    auto document_text = DocumentBuilder::splitAndNormalize(doc.content);
     for (const auto& word : document_text)
     {
         indexes[word][id]++;

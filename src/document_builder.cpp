@@ -1,21 +1,22 @@
 #include "document_builder.hpp"
 #include <algorithm>
 #include <cctype>
-
-Document DocumentBuilder::build(size_t id, std::string name, std::string text)
+namespace lab5::memory
+{
+Document DocumentBuilder::build(size_t id, std::string name, std::string content)
 {
 
-    std::vector<std::string> words = splitAndNormalize(text);
+    std::vector<std::string> words = splitAndNormalize(content);
 
-    return Document(id, std::move(name), std::move(text), std::move(words));
+    return Document(id, std::move(name), std::move(content), std::move(words));
 }
 
-std::vector<std::string> DocumentBuilder::splitAndNormalize(const std::string& text)
+std::vector<std::string> DocumentBuilder::splitAndNormalize(const std::string& content)
 {
     std::vector<std::string> result;
     std::string current_word;
 
-    for (unsigned char ch : text)
+    for (unsigned char ch : content)
     {
         if (std::isalnum(ch))
         {
@@ -34,4 +35,5 @@ std::vector<std::string> DocumentBuilder::splitAndNormalize(const std::string& t
     }
 
     return result;
+}
 }

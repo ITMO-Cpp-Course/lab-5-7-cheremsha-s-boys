@@ -12,7 +12,9 @@ option(STRICT_WARNINGS "Enable extra warnings and treat warnings as errors" ON)
 option(ENABLE_SANITIZERS "Enable AddressSanitizer" ON)
 
 # Common warnings
-add_library(project_warnings INTERFACE)
+add_library(project_warnings INTERFACE
+        src/Document.hpp
+        src/InvertedIndex.cpp)
 if (MSVC)
     target_compile_options(project_warnings INTERFACE
             /W4 /permissive- /Zc:preprocessor /Zc:__cplusplus /utf-8
@@ -34,7 +36,12 @@ enable_testing()
 # AddressSanitizer (ASan) as an interface target
 # Sanitizers are not supported on Windows (neither MSVC nor MinGW)
 if (ENABLE_SANITIZERS AND NOT WIN32)
-    add_library(project_sanitizers INTERFACE)
+    add_library(project_sanitizers INTERFACE
+            src/InvertedIndex.hpp
+            src/InvertedIndex.cpp
+            src/Document.hpp
+            src/Document.hpp
+            src/Document.hpp)
     target_compile_options(project_sanitizers INTERFACE $<$<CONFIG:Debug>:-fsanitize=address -fno-omit-frame-pointer>)
     target_link_options(project_sanitizers INTERFACE    $<$<CONFIG:Debug>:-fsanitize=address>)
 endif ()

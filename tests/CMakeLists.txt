@@ -9,6 +9,8 @@ FetchContent_MakeAvailable(catch2)
 
 add_executable(resource_tests
         tests.cpp
+        ../src/Document.hpp
+        ../src/InvertedIndex.cpp
 )
 
 target_link_libraries(resource_tests PRIVATE resource_core project_warnings Catch2::Catch2WithMain)

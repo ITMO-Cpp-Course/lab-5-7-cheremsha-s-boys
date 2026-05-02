@@ -10,7 +10,7 @@ struct Document
     std::string content;
 
     Document(size_t id, std::string name, std::string content)
-        : id(id), name(std::move(name)), content(std::move(content)) {};
+        : id(id), name(std::move(name)), content(std::move(content)) {}; //
     ~Document() = default;
     Document(const Document&) = delete;
     Document& operator=(const Document&) = delete;

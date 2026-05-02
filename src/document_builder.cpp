@@ -10,7 +10,6 @@ Document DocumentBuilder::build(size_t id, std::string name, std::string text)
     return Document(id, std::move(name), std::move(text), std::move(words));
 }
 
-
 std::vector<std::string> DocumentBuilder::splitAndNormalize(const std::string& text)
 {
     std::vector<std::string> result;

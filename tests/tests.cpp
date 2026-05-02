@@ -1,21 +1,24 @@
-#include "document_builder.hpp"
-#include "inverted_index.hpp"
+#include "../src/DocumentBuilder.hpp"
+#include "../src/InvertedIndex.hpp"
 #include <catch2/catch_test_macros.hpp>
 #include <catch2/matchers/catch_matchers_all.hpp>
 
+using namespace lab5::memory;
+
 TEST_CASE("DocumentBuilder: Processing logic", "[builder]")
 {
-    SECTION("Basic tokenization")
+    SECTION("Basic tokenization and normalization")
     {
-        auto doc = DocumentBuilder::build(1, "Lab", "Hello, World!");
-        std::vector<std::string> expected = {"hello", "world"};
-        REQUIRE(doc.getWords() == expected);
+        // Проверяем, что билд создает документ и корректно разбивает текст
+        auto words = DocumentBuilder::splitAndNormalize("Hello, World! HELLO.");
+        std::vector<std::string> expected = {"hello", "world", "hello"};
+        REQUIRE(words == expected);
     }
 
     SECTION("Empty strings handling")
     {
-        auto doc = DocumentBuilder::build(2, "Empty", "  !!!  ");
-        REQUIRE(doc.getWords().empty());
+        auto words = DocumentBuilder::splitAndNormalize("   !!!   ");
+        REQUIRE(words.empty());
     }
 }
 
@@ -23,30 +26,43 @@ TEST_CASE("InvertedIndex: Core functionality", "[index]")
 {
     InvertedIndex index;
 
-    SECTION("Add and Search")
+    SECTION("Add and Search documents")
     {
-        index.addDocument(DocumentBuilder::build(10, "D1", "physics is cool"));
-        index.addDocument(DocumentBuilder::build(11, "D2", "coding is physics"));
+        // Используем std::move, так как копирование Document запрещено
+        index.AddDocument(DocumentBuilder::build(10, "Doc1", "physics is cool"));
+        index.AddDocument(DocumentBuilder::build(11, "Doc2", "coding is physics"));
 
-        auto results = index.search("physics");
+        auto results = index.DocumentSearch("physics");
+
+        // Должно найти в обоих документах
         REQUIRE(results.size() == 2);
-        // Проверка наличия айди
-        REQUIRE_THAT(results, Catch::Matchers::UnorderedEquals(std::vector<size_t>{10, 11}));
+        REQUIRE(results.contains(10));
+        REQUIRE(results.contains(11));
     }
 
-    SECTION("Word counting")
+    SECTION("Correct occurrence counting")
     {
-        index.addDocument(DocumentBuilder::build(1, "D1", "test test again"));
-        REQUIRE(index.getWordCount("test", 1) == 2);
-        REQUIRE(index.getWordCount("missing", 1) == 0);
+        index.AddDocument(DocumentBuilder::build(1, "Doc1", "test test again test"));
+
+        auto results = index.DocumentSearch("test");
+        // Слово "test" встречается 3 раза в документе 1
+        REQUIRE(results.at(1) == 3);
     }
 
     SECTION("Removal logic")
     {
-        index.addDocument(DocumentBuilder::build(1, "D1", "delete me"));
-        REQUIRE_FALSE(index.search("delete").empty());
+        index.AddDocument(DocumentBuilder::build(1, "Doc1", "delete me"));
+        REQUIRE_FALSE(index.DocumentSearch("delete").empty());
 
-        index.removeDocument(1);
-        CHECK(index.search("delete").empty());
+        index.RemoveDocument(1);
+        auto results = index.DocumentSearch("delete");
+        CHECK(results.empty());
+    }
+
+    SECTION("Search for non-existent word")
+    {
+        index.AddDocument(DocumentBuilder::build(1, "Doc1", "simple text"));
+        auto results = index.DocumentSearch("ghost");
+        REQUIRE(results.empty());
     }
 }

@@ -36,4 +36,4 @@ std::vector<std::string> DocumentBuilder::splitAndNormalize(const std::string& t
 
     return result;
 }
-}
+} // namespace lab5::memory

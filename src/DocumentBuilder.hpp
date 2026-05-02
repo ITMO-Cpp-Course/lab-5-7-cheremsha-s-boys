@@ -1,5 +1,4 @@
 #pragma once
-
 #include "Document.hpp"
 #include <string>
 #include <vector>

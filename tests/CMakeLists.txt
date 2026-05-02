@@ -1,4 +1,3 @@
-
 add_executable(resource_tests tests.cpp)
 
 target_include_directories(resource_tests PRIVATE ../src)

@@ -1,4 +1,3 @@
-
 set(ENGINE_SOURCES
         InvertedIndex.cpp
         DocumentBuilder.cpp

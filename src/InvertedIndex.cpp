@@ -18,7 +18,7 @@ void InvertedIndex::AddDocument(Document&& doc)
     }
     documents.emplace(id, std::move(doc));
 }
-bool InvertedIndex::Only_Document(size_t id) const
+bool InvertedIndex::ExistsDocument(size_t id) const
 {
     if (documents.find(id) != documents.end())
         return true;

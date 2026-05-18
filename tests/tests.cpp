@@ -19,7 +19,7 @@ TEST_CASE("DocumentBuilder: Processing logic", "[builder]")
 
     SECTION("Empty strings handling")
     {
-        auto words = DocumentBuilder::splitAndNormalize("   !!!   ");//пр
+        auto words = DocumentBuilder::splitAndNormalize("   !!!   ");
         REQUIRE(words.empty());
     }
 }

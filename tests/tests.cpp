@@ -82,7 +82,7 @@ TEST_CASE("UpdateTransaction: Успешный коммит (commit) сохра�
 
     REQUIRE(store.HasDocument(1) == true);
 }
-//123
+
 TEST_CASE("UpdateTransaction: RAII при ошибке", "[transaction]")
 {
     IndexStore store;

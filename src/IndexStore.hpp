@@ -21,14 +21,14 @@ class IndexStore
     InvertedIndex get_snapshot() const
     {
         return index_;
-    } //
+    }
     void restore_snapshot(const InvertedIndex& snapshot)
     {
         index_ = snapshot;
-    } //
+    }
     bool HasDocument(size_t id) const
     {
-        return index_.Only_Document(id);
+        return index_.ExistsDocument(id);
     }
 };
 } // namespace lab5::memory

@@ -16,7 +16,7 @@ class InvertedIndex
   public:
     InvertedIndex() = default;
     ~InvertedIndex() = default;
-    bool Only_Document(size_t id) const;
+    bool ExistsDocument(size_t id) const;
     void AddDocument(Document&& doc);
     std::map<size_t, size_t> DocumentSearch(const std::string& query) const;
     void RemoveDocument(size_t id);

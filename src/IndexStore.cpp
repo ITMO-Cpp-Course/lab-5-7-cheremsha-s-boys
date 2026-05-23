@@ -10,7 +10,7 @@ Result<void> IndexStore::AddDocument(Document&& doc)
     {
         return std::unexpected(IndexError::Invalid_Input);
     }
-    if (index_.Only_Document(doc.id))
+    if (index_.ExistsDocument(doc.id))
     {
         return std::unexpected(IndexError::Duplicate_Document);
     }
@@ -19,7 +19,7 @@ Result<void> IndexStore::AddDocument(Document&& doc)
 }
 Result<void> IndexStore::RemoveDocument(size_t id)
 {
-    if (!(index_.Only_Document(id)))
+    if (!(index_.ExistsDocument(id)))
     {
         return std::unexpected(IndexError::Document_Not_Found);
     }
@@ -41,6 +41,7 @@ Result<std::map<size_t, size_t>> IndexStore::DocumentSearch(const std::string& q
     return result;
 }
 Result<UpdateTransaction> IndexStore::BeginTransaction()
+
 {
     return Result<UpdateTransaction>(std::in_place, *this);
 }

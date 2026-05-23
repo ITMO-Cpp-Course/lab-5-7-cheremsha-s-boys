@@ -22,6 +22,11 @@ std::vector<std::string> DocumentBuilder::splitAndNormalize(const std::string& t
         {
             current_word += static_cast<char>(std::tolower(ch));
         }
+        else if (ch == '-' && !current_word.empty())
+        {
+
+            current_word += '-';
+        }
         else if (!current_word.empty())
         {
             result.push_back(std::move(current_word));

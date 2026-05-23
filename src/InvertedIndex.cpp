@@ -6,6 +6,10 @@ namespace lab5::memory
 void InvertedIndex::AddDocument(Document&& doc)
 {
     size_t id = doc.id;
+    if (documents.find(id) != documents.end())
+    {
+        return;
+    }
     auto document_text = DocumentBuilder::splitAndNormalize(doc.content);
     for (const auto& word : document_text)
     {
@@ -13,6 +17,12 @@ void InvertedIndex::AddDocument(Document&& doc)
         document_contents[id].insert(word);
     }
     documents.emplace(id, std::move(doc));
+}
+bool InvertedIndex::ExistsDocument(size_t id) const
+{
+    if (documents.find(id) != documents.end())
+        return true;
+    return false;
 }
 void InvertedIndex::RemoveDocument(size_t id)
 {
